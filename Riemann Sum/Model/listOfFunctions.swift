@@ -9,14 +9,14 @@
 import Foundation
 
 class ListOfFunctions {
-    var list : [UserFunctions] = [UserFunctions]()
+    var list : [UserFunction] = [UserFunction]()
     
     init(){
 
     }
     
     func printDetailsAtIndex(indexAt: Int){
-        print(list[indexAt])
+        print(list[indexAt].functionGiven)
     }
     
 }

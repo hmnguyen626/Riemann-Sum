@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserFunctions {
+class UserFunction {
     var upperBound : Int = 0
     var lowerBound : Int = 0
     var functionGiven : String = ""
