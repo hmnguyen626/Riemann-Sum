@@ -21,7 +21,7 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     var currentList = ListOfFunctions()    // Holds the list of user generated functions
     var sliderValue = Int()
     var deltaX = Double()
-    var finalizedInputString = ""
+    //var stringForMathParser = ""
     
     
     override func viewDidLoad() {
@@ -63,7 +63,6 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     
     //---------------------------------------------------------------------------------------------------
     //MARK: - dataRecieved from protocol
-    
     func dataRecieved(fn: String, upper: Int, lower: Int) {
         // Create a new entry from the data recieved.
         let entry = UserFunction(upperBoundLimit: upper, lowerBoundLimit: lower, functionEntry: fn)
@@ -95,15 +94,19 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         return cell
     }
     
+    // If the user selects a row (formula), then perform calculations for the specific row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Set value of DeltaX for selected formula
         deltaX = calculateDeltaX(row: indexPath.row, rectangles: sliderValue)
         
         // Set formatted string for selected formula
-        finalizedInputString = formatForParser()
+        guard let stringForMathParser = currentList.list[indexPath.row].finalizedInputString else {
+            print("Found nil")
+            return
+        }
         
         // Test
-        print(calculateMidRiemannSum(numberOfRectangles: sliderValue))
+        print(calculateMidRiemannSum(numberOfRectangles: sliderValue, parsedString: stringForMathParser))
     }
     
     // Sets the height of out tableview rows
@@ -116,6 +119,7 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         return currentList.list.count
     }
     
+    // Automatically configure table
     func configureTableView(){
         formulasTableView.rowHeight = UITableViewAutomaticDimension // Request tableview to use default value
         formulasTableView.estimatedRowHeight = 120.0                // Standard for average message
@@ -125,56 +129,32 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     //---------------------------------------------------------------------------------------------------
     //MARK: - Calculations
     
-    // Returns a formatted string to be passed to MathParser
-    func formatForParser() -> String {
-        // Placeholders
-        let array = Array(currentList.list[0].functionGiven)
-        var convertedString : String = ""
-        var newArray = [Character]()
-        
-        // Loops through array looking for variable x
-        for i in 0...(array.count - 1) {
-            if array[i] == "x" {
-                newArray.append("$")
-                newArray.append(array[i])
-                
-            } else {
-                newArray.append(array[i])
-            }
-        }
-        
-        // Assign place holder to newly converted character array
-        convertedString = String(newArray)
-        
-        return convertedString
-    }
-    
     // Calculate deltaX
+    // *Note* deltaX is the width of each rectangle, therefore the general formula to calculate is
+    // (upperBound - lowerBound) = range of our desired area
+    // ➗ by rectangles (number of desired rectangles)
     func calculateDeltaX(row: Int, rectangles: Int) -> Double {
-        let upperBound = currentList.list[row].upperBound
-        let lowerBound = currentList.list[row].lowerBound
-        
-        let deltaX = Double((upperBound - lowerBound) / rectangles)
+        let upperBound = Double(currentList.list[row].upperBound)
+        let lowerBound = Double(currentList.list[row].lowerBound)
+        let deltaX = ((upperBound - lowerBound) / Double(rectangles))
         
         return deltaX
     }
     
     // Calculates the RiemannSum using MidPoint method
-    func calculateMidRiemannSum(numberOfRectangles: Int) -> Double {
+    func calculateMidRiemannSum(numberOfRectangles: Int, parsedString: String) -> Double {
         var area : Double = 0.0
         var position : Double = deltaX / 2.0
         
-        for i in 0...numberOfRectangles - 1 {
+        for _ in 0...numberOfRectangles - 1 {
             do {
                 // MathParser evaluates with a variable 'x' in the user input
-                let value = try finalizedInputString.evaluate(["x": position])
+                let value = try parsedString.evaluate(["x": position])
                 area += value * (deltaX)
                 position += deltaX
                 
-                print(position)
             } catch {
                 print(error)
-                //makeError(whatTitle: "Invalid expression", whatMessage: "Please check input.", whatAction: "Okay")
             }
         }
 
@@ -188,8 +168,8 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         slider.value = Float(value)
         slider.maximumValue = Float(max)
         
-        // Prevents division by 0 aswell
-        //slider.minimumValue = 1
+        // Set min to atleast 1 rectangle
+        slider.minimumValue = 1
         
         // Global sliderValue
         sliderValue = value
@@ -200,8 +180,6 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         sliderValue = Int(sender.value)
         
     }
-    
-    
     
     //---------------------------------------------------------------------------------------------------
 }

@@ -18,19 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oXE-v8-0kS" userLabel="Top Container">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oXE-v8-0kS" userLabel="Top Container" customClass="BarLineChartViewBase" customModule="Charts">
                                 <rect key="frame" x="0.0" y="88" width="375" height="362"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t4g-mT-1tZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="362"/>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="t4g-mT-1tZ" firstAttribute="leading" secondItem="oXE-v8-0kS" secondAttribute="leading" id="A6E-Ra-c1t"/>
-                                    <constraint firstAttribute="trailing" secondItem="t4g-mT-1tZ" secondAttribute="trailing" id="Olr-Lq-pEd"/>
-                                    <constraint firstItem="t4g-mT-1tZ" firstAttribute="top" secondItem="oXE-v8-0kS" secondAttribute="top" id="e7u-ME-BFz"/>
-                                    <constraint firstAttribute="bottom" secondItem="t4g-mT-1tZ" secondAttribute="bottom" id="ubU-98-vWN"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9h8-9C-6hi" userLabel="Bottom Container">
                                 <rect key="frame" x="0.0" y="450" width="375" height="362"/>
@@ -39,7 +28,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="n9R-nj-u5y">
-                                                <rect key="frame" x="57" y="15" width="264" height="30"/>
+                                                <rect key="frame" x="53.333333333333343" y="15" width="267.66666666666663" height="30"/>
                                                 <connections>
                                                     <action selector="sliderPressed:" destination="BYZ-38-t0r" eventType="valueChanged" id="QXG-3Z-ZxZ"/>
                                                 </connections>
@@ -50,8 +39,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xk-9U-4l4">
-                                                <rect key="frame" x="19" y="18" width="13" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xk-9U-4l4">
+                                                <rect key="frame" x="19" y="18" width="9.3333333333333357" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -120,7 +109,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xln-Vq-N1h">
                                 <rect key="frame" x="276" y="1.6666666666666679" width="83" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="New"/>
                                 <connections>
                                     <action selector="newButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DOf-uM-yOj"/>
