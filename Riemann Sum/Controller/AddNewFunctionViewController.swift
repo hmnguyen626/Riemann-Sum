@@ -22,6 +22,10 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var upperBoundTextField: UITextField!
     @IBOutlet weak var lowerBoundTextField: UITextField!
     @IBOutlet weak var yAlignmentConstraint: NSLayoutConstraint!
+    @IBOutlet weak var popUpView: UIView!
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +34,11 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
         self.functionTextField.delegate = self
         self.upperBoundTextField.delegate = self
         self.lowerBoundTextField.delegate = self
+        
+        // Rounded corners for popUpView
+        popUpView.layer.cornerRadius = 15
+        // Anything that is above it, it conforms to what shape the main view has
+        popUpView.layer.masksToBounds = true
     }
 
 
@@ -72,7 +81,7 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     //---------------------------------------------------------------------------------------------------

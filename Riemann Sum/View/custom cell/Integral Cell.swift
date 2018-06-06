@@ -10,15 +10,21 @@ import UIKit
 
 class Integral_Cell: UITableViewCell {
 
+    // Properties
+    @IBOutlet weak var formulaLabel: UILabel!
+    @IBOutlet weak var topBoundLabel: UILabel!
+    @IBOutlet weak var bottomBoundLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        // Configure the view for the selected state
+//    }
     
 }
