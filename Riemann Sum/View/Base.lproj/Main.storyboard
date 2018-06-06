@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Riemann Sum-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Riemann_Sum" customModuleProvider="target" sceneMemberID="viewController">
@@ -25,7 +25,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="362"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.15686274510000001" green="0.66666666669999997" blue="0.75294117650000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="t4g-mT-1tZ" firstAttribute="leading" secondItem="oXE-v8-0kS" secondAttribute="leading" id="A6E-Ra-c1t"/>
                                     <constraint firstAttribute="trailing" secondItem="t4g-mT-1tZ" secondAttribute="trailing" id="Olr-Lq-pEd"/>
@@ -41,6 +40,9 @@
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="n9R-nj-u5y">
                                                 <rect key="frame" x="57" y="15" width="264" height="30"/>
+                                                <connections>
+                                                    <action selector="sliderPressed:" destination="BYZ-38-t0r" eventType="valueChanged" id="QXG-3Z-ZxZ"/>
+                                                </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWI-Xy-sBJ">
                                                 <rect key="frame" x="327" y="17" width="35" height="24"/>
@@ -113,7 +115,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="gV6-qz-h0T">
+                    <navigationItem key="navigationItem" title="Riemann Sum" id="gV6-qz-h0T">
                         <barButtonItem key="rightBarButtonItem" style="done" id="zeU-BE-Wbg">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xln-Vq-N1h">
                                 <rect key="frame" x="276" y="1.6666666666666679" width="83" height="41"/>
@@ -131,6 +133,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="formulasTableView" destination="C0l-sO-5cd" id="YNZ-JR-6GT"/>
+                        <outlet property="slider" destination="n9R-nj-u5y" id="JQe-ZE-3ym"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

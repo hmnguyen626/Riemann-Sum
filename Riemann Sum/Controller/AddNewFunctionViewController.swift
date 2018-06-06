@@ -25,8 +25,6 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var popUpView: UIView!
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,9 +37,16 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
         popUpView.layer.cornerRadius = 15
         // Anything that is above it, it conforms to what shape the main view has
         popUpView.layer.masksToBounds = true
+        
+        // Set keyboard to numpad
+        self.upperBoundTextField.keyboardType = UIKeyboardType.decimalPad
+        self.lowerBoundTextField.keyboardType = UIKeyboardType.decimalPad
     }
 
-
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
 
     //---------------------------------------------------------------------------------------------------
     //MARK: - Textfield functionalities
@@ -92,10 +97,14 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
     
     
     //---------------------------------------------------------------------------------------------------
-
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    //MARK: - Allow only these keyboard characters
+    // Overrides our textField to only allows numbers, x, +, -, /, *, (, ), and -
+    // Future update should include: sin(), cos(), tan(), arctan(), etc...
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let aSet = NSCharacterSet(charactersIn:"-0123456789x*+/e()$").inverted
+        let compSepByCharInSet = string.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
         
+        return string == numberFiltered
     }
 }
