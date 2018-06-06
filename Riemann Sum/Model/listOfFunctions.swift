@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+class ListOfFunctions {
+    var list : [UserFunctions] = [UserFunctions]()
+    
+    init(){
+
+    }
+    
+    func printDetailsAtIndex(indexAt: Int){
+        print(list[indexAt])
+    }
+    
+}

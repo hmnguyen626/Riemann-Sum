@@ -7,3 +7,23 @@
 //
 
 import Foundation
+
+class UserFunctions {
+    var upperBound : Int = 0
+    var lowerBound : Int = 0
+    var functionGiven : String = ""
+    var areaUnderCurve : Float?
+    
+    init(){
+        
+    }
+    
+    convenience init(upperBoundLimit: Int, lowerBoundLimit: Int, functionEntry: String){
+        self.init()
+        
+        upperBound = upperBoundLimit
+        lowerBound = lowerBoundLimit
+        functionGiven = functionEntry
+    }
+    
+}
