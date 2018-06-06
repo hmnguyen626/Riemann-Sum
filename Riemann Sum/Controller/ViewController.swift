@@ -26,7 +26,7 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         formulasTableView.dataSource = self
         
         // Register custom cell 'integral cell'
-        formulasTableView.register(UINib(nibName: "Integral Cell", bundle: nil), forCellReuseIdentifier: "customIntegralCell")
+        formulasTableView.register(UINib(nibName: "IntegralCell", bundle: nil), forCellReuseIdentifier: "customIntegralCell")
         
     }
 
@@ -72,13 +72,19 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         // Copied identifier from custom class identifier value 'customIntegralCell'
         // indexPath refers to the location of the cell, etc row1,row2,row3
         // Because we are using a custom cell, we must cast it as the custom class "Integral_Cell"
-        let cell = formulasTableView.dequeueReusableCell(withIdentifier: "customIntegralCell", for: indexPath) as! Integral_Cell
+        let cell = formulasTableView.dequeueReusableCell(withIdentifier: "customIntegralCell", for: indexPath) as! IntegralCell
         
-        cell.topBoundLabel.text = String(currentList.list[indexPath.row].upperBound)
-        cell.bottomBoundLabel.text = String(currentList.list[indexPath.row].lowerBound)
+        // Populate our custom cell properties
+        cell.upperBoundLabel.text = String(currentList.list[indexPath.row].upperBound)
+        cell.lowerBoundLabel.text = String(currentList.list[indexPath.row].lowerBound)
         cell.formulaLabel.text = currentList.list[indexPath.row].functionGiven
         
         return cell
+    }
+    
+    // Sets the height of out tableview rows
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0
     }
     
     // Number of rows will be the size of our currentList.list[] size

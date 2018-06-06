@@ -15,9 +15,9 @@
 		A06CEFAC20C757B9004E5A44 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A06CEFAA20C757B9004E5A44 /* LaunchScreen.storyboard */; };
 		A06CEFB720C76290004E5A44 /* userFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06CEFB620C76290004E5A44 /* userFunctions.swift */; };
 		A06CEFB920C763BC004E5A44 /* listOfFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06CEFB820C763BC004E5A44 /* listOfFunctions.swift */; };
-		A06CEFBD20C764EC004E5A44 /* Integral Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06CEFBB20C764EC004E5A44 /* Integral Cell.swift */; };
-		A06CEFBE20C764EC004E5A44 /* Integral Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A06CEFBC20C764EC004E5A44 /* Integral Cell.xib */; };
 		A06CEFC020C773C6004E5A44 /* AddNewFunctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06CEFBF20C773C6004E5A44 /* AddNewFunctionViewController.swift */; };
+		A0D75DAA20C7B14800292D54 /* IntegralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D75DA820C7B14800292D54 /* IntegralCell.swift */; };
+		A0D75DAB20C7B14800292D54 /* IntegralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0D75DA920C7B14800292D54 /* IntegralCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,9 +32,9 @@
 		A06CEFAD20C757B9004E5A44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06CEFB620C76290004E5A44 /* userFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userFunctions.swift; sourceTree = "<group>"; };
 		A06CEFB820C763BC004E5A44 /* listOfFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listOfFunctions.swift; sourceTree = "<group>"; };
-		A06CEFBB20C764EC004E5A44 /* Integral Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Integral Cell.swift"; sourceTree = "<group>"; };
-		A06CEFBC20C764EC004E5A44 /* Integral Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "Integral Cell.xib"; sourceTree = "<group>"; };
 		A06CEFBF20C773C6004E5A44 /* AddNewFunctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewFunctionViewController.swift; sourceTree = "<group>"; };
+		A0D75DA820C7B14800292D54 /* IntegralCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegralCell.swift; sourceTree = "<group>"; };
+		A0D75DA920C7B14800292D54 /* IntegralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntegralCell.xib; sourceTree = "<group>"; };
 		C02F2CE3912CBD6116E0BAEC /* Pods-Riemann Sum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Riemann Sum.release.xcconfig"; path = "Pods/Target Support Files/Pods-Riemann Sum/Pods-Riemann Sum.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,7 +100,7 @@
 		A06CEFB420C7622C004E5A44 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A06CEFBA20C764B6004E5A44 /* custom cell */,
+				A0D75DA720C7B11D00292D54 /* Custom Cell */,
 				A06CEFA520C757B6004E5A44 /* Main.storyboard */,
 				A06CEFAA20C757B9004E5A44 /* LaunchScreen.storyboard */,
 			);
@@ -117,13 +117,13 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		A06CEFBA20C764B6004E5A44 /* custom cell */ = {
+		A0D75DA720C7B11D00292D54 /* Custom Cell */ = {
 			isa = PBXGroup;
 			children = (
-				A06CEFBB20C764EC004E5A44 /* Integral Cell.swift */,
-				A06CEFBC20C764EC004E5A44 /* Integral Cell.xib */,
+				A0D75DA820C7B14800292D54 /* IntegralCell.swift */,
+				A0D75DA920C7B14800292D54 /* IntegralCell.xib */,
 			);
-			path = "custom cell";
+			path = "Custom Cell";
 			sourceTree = "<group>";
 		};
 		ED7FD8701AFB251B385FEC93 /* Pods */ = {
@@ -196,10 +196,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A06CEFBE20C764EC004E5A44 /* Integral Cell.xib in Resources */,
 				A06CEFAC20C757B9004E5A44 /* LaunchScreen.storyboard in Resources */,
 				A06CEFA920C757B9004E5A44 /* Assets.xcassets in Resources */,
 				A06CEFA720C757B6004E5A44 /* Main.storyboard in Resources */,
+				A0D75DAB20C7B14800292D54 /* IntegralCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +277,7 @@
 				A06CEFB920C763BC004E5A44 /* listOfFunctions.swift in Sources */,
 				A06CEFC020C773C6004E5A44 /* AddNewFunctionViewController.swift in Sources */,
 				A06CEFA220C757B6004E5A44 /* AppDelegate.swift in Sources */,
-				A06CEFBD20C764EC004E5A44 /* Integral Cell.swift in Sources */,
+				A0D75DAA20C7B14800292D54 /* IntegralCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
