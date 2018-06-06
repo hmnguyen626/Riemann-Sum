@@ -1,0 +1,6 @@
+framework module Pods_Riemann_Sum {
+  umbrella header "Pods-Riemann Sum-umbrella.h"
+
+  export *
+  module * { export * }
+}
