@@ -11,7 +11,6 @@ import MathParser
 import Charts
 
 class ViewController: UIViewController, userEnteredNewFunction, UITableViewDelegate, UITableViewDataSource {
-    
     // Outlets
     @IBOutlet weak var formulasTableView: UITableView!
     @IBOutlet weak var slider: UISlider!
@@ -40,7 +39,6 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         // Slider initial config
         sliderConfig(value: 10, max: 100)
         
-        chartConfig()
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,6 +55,7 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         
     }
     
+    // Set ViewController as delegate of AddNewViewController.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToAddNew" {
             let destinationVC = segue.destination as! AddNewFunctionViewController
@@ -94,14 +93,29 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         // Populate our custom cell properties
         cell.upperBoundLabel.text = String(currentList.list[indexPath.row].upperBound)
         cell.lowerBoundLabel.text = String(currentList.list[indexPath.row].lowerBound)
-        cell.formulaLabel.text = currentList.list[indexPath.row].functionGiven
+        cell.formulaLabel.text = currentList.list[indexPath.row].functionGiven + "  dx"
         
         return cell
     }
     
-    // If the user selects a row (formula), then perform calculations for:
-    //      area approximation
-    //      values for Chart (line and bar)
+    // Sets the height of out tableview rows
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0
+    }
+    
+    // Number of rows will be the size of our currentList.list[] size
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return currentList.list.count
+    }
+    
+    // Automatically configure table -UDEMY
+    func configureTableView(){
+        formulasTableView.rowHeight = UITableViewAutomaticDimension // Request tableview to use default value
+        formulasTableView.estimatedRowHeight = 120.0                // Standard for average message
+        
+    }
+    
+    // If the user selects a row (formula), then perform calculations for: area approximation & values for Chart (line and bar)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Set value of DeltaX for selected formula
         deltaX = calculateDeltaX(row: indexPath.row, rectangles: sliderValue)
@@ -115,25 +129,27 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         // Calculate the area
         let area = calcRSandGraphValues(numberOfRectangles: sliderValue, parsedString: stringForMathParser)
         
-        // Input data to graph
-        setChartValues(entries: chartData, area: area, formula: currentList.list[indexPath.row].functionGiven)
+        // Create, input data, and config our chart
+        createChart(entries: chartData, area: area, formula: currentList.list[indexPath.row].functionGiven)
     }
     
-    // Sets the height of out tableview rows
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    // Number of rows will be the size of our currentList.list[] size
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentList.list.count
-    }
-    
-    // Automatically configure table
-    func configureTableView(){
-        formulasTableView.rowHeight = UITableViewAutomaticDimension // Request tableview to use default value
-        formulasTableView.estimatedRowHeight = 120.0                // Standard for average message
-        
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            
+            // handle delete (by removing the data from your array and updating the tableview)
+            currentList.list.remove(at: indexPath.row)
+            
+            // Clear linechart data
+            lineChartView.data?.clearValues()
+            
+            // Reload our tableView data
+            formulasTableView.reloadData()
+            
+        }
     }
     
     //---------------------------------------------------------------------------------------------------
@@ -151,7 +167,8 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         return deltaX
     }
     
-    // Calculates the RiemannSum using MidPoint method
+    // Calculates the RiemannSum using MidPoint method.  Also append values into chartData(x,y) for future
+    // use in populating chart values.
     func calcRSandGraphValues(numberOfRectangles: Int, parsedString: String) -> Double {
         var area : Double = 0.0
         var position : Double = deltaX / 2.0
@@ -203,44 +220,44 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     //---------------------------------------------------------------------------------------------------
     //MARK: - CHART
     
-    func setChartValues(entries: [ChartDataEntry], area: Double, formula: String){
+    func createChart(entries: [ChartDataEntry], area: Double, formula: String){
         let set = LineChartDataSet(values: entries, label: "f(x) = \(formula)")
         // Update description line
         lineChartView.chartDescription?.text = "Approximate area: \(area)    Rectangles: \(sliderValue)"
         
-        // Disable circle inner hole
-        set.drawCircleHoleEnabled = false
-        
-        // Smaller radius
-        set.circleRadius = CGFloat(4.0)
-        
-        // Color
-        set.setCircleColor(NSUIColor.black)
-        
-        // Line mode
-        set.mode = .cubicBezier
-        
-        // Fill area under the curbe
-        set.fill = Fill.fillWithColor(NSUIColor.red)
-        set.drawFilledEnabled = true
-        
-        // Removes the yellow highlight that indicates user pressed an area
-        set.drawVerticalHighlightIndicatorEnabled = false
-        set.drawHorizontalHighlightIndicatorEnabled = false
-        
-        // Remove unneccesary axis lines
-        lineChartView.rightAxis.enabled = false
-        lineChartView.xAxis.enabled = false
+        // Config
+        chartConfig(dataSet: set)
         
         // Add data set
         let data = LineChartData(dataSet: set)
         lineChartView.data = data
-        
-        
     }
     
-    func chartConfig(){
+    // Configuration for our chart
+    func chartConfig(dataSet: LineChartDataSet){
+        // Disable circle inner hole
+        dataSet.drawCircleHoleEnabled = false
         
+        // Smaller radius
+        dataSet.circleRadius = CGFloat(4.0)
+        
+        // Color
+        dataSet.setCircleColor(NSUIColor.black)
+        
+        // Line mode
+        dataSet.mode = .cubicBezier
+        
+        // Fill area under the curbe
+        dataSet.fill = Fill.fillWithColor(NSUIColor.red)
+        dataSet.drawFilledEnabled = true
+        
+        // Removes the yellow highlight that indicates user pressed an area
+        dataSet.drawVerticalHighlightIndicatorEnabled = false
+        dataSet.drawHorizontalHighlightIndicatorEnabled = false
+        
+        // Remove unneccesary axis lines
+        lineChartView.rightAxis.enabled = false
+        lineChartView.xAxis.enabled = false
     }
     
     

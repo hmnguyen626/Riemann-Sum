@@ -114,7 +114,7 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
     // Overrides our textField to only allows numbers, x, +, -, /, *, (, ), and -
     // Future update should include: sin(), cos(), tan(), arctan(), etc...
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let aSet = NSCharacterSet(charactersIn:"-0123456789x*+/e()$").inverted
+        let aSet = NSCharacterSet(charactersIn:"-0123456789x*+/e()$cositan").inverted
         let compSepByCharInSet = string.components(separatedBy: aSet)
         let numberFiltered = compSepByCharInSet.joined(separator: "")
         
