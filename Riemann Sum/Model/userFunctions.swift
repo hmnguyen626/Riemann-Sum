@@ -27,10 +27,6 @@ class UserFunction {
         formatForParser()
     }
     
-    func calculateValuesForGraph(){
-        
-    }
-    
     // Returns a formatted string to be passed to MathParser
     func formatForParser() {
         // Placeholders

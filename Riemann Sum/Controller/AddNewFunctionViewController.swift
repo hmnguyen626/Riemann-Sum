@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Every delegate must conform to this protocol
 protocol userEnteredNewFunction{
     func dataRecieved(fn: String, upper: Int, lower: Int)
     
@@ -75,13 +76,14 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Buttons pressed
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
-        if let fnc = functionTextField.text {
-            delegate?.dataRecieved(fn: fnc, upper: Int(upperBoundTextField.text!)!, lower: Int(lowerBoundTextField.text!)!)
+        // If input is valid then send data backwards to our delegate, and dismiss this viewcontroller
+        if validInput(){
+            delegate?.dataRecieved(fn: functionTextField.text!, upper: Int(upperBoundTextField.text!)!, lower: Int(lowerBoundTextField.text!)!)
+            
+            self.dismiss(animated: true, completion: nil)
         } else {
-            print("Func not entered.")
+            print("Not all inputs are present.")
         }
-        
-        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -90,9 +92,20 @@ class AddNewFunctionViewController: UIViewController, UITextFieldDelegate {
     }
     
     //---------------------------------------------------------------------------------------------------
-    //MARK: - Dismiss keyboard
+    //MARK: - Keyboard and character checks
+    
+    // Dismisses keyboard if touch outside
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    // Error Checking: Ensure that all parameters for user input is valid
+    func validInput() -> Bool {
+        if functionTextField.text == "" || upperBoundTextField.text == "" || lowerBoundTextField.text == "" {
+            return false
+        } else {
+            return true
+        }
     }
     
     

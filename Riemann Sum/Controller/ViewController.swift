@@ -21,8 +21,9 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     var currentList = ListOfFunctions()    // Holds the list of user generated functions
     var sliderValue = Int()
     var deltaX = Double()
-    //var stringForMathParser = ""
     
+    // Empty array for chart
+    var valuesForChart : [Double] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +95,9 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         return cell
     }
     
-    // If the user selects a row (formula), then perform calculations for the specific row
+    // If the user selects a row (formula), then perform calculations for:
+    //      area approximation
+    //      values for Chart (line and bar)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Set value of DeltaX for selected formula
         deltaX = calculateDeltaX(row: indexPath.row, rectangles: sliderValue)
@@ -106,7 +109,7 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         }
         
         // Test
-        print(calculateMidRiemannSum(numberOfRectangles: sliderValue, parsedString: stringForMathParser))
+        print(calcRSandGraphValues(numberOfRectangles: sliderValue, parsedString: stringForMathParser))
     }
     
     // Sets the height of out tableview rows
@@ -142,24 +145,34 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     }
     
     // Calculates the RiemannSum using MidPoint method
-    func calculateMidRiemannSum(numberOfRectangles: Int, parsedString: String) -> Double {
+    func calcRSandGraphValues(numberOfRectangles: Int, parsedString: String) -> Double {
         var area : Double = 0.0
         var position : Double = deltaX / 2.0
+        
+        // Reset to initial condition
+        valuesForChart = []
         
         for _ in 0...numberOfRectangles - 1 {
             do {
                 // MathParser evaluates with a variable 'x' in the user input
                 let value = try parsedString.evaluate(["x": position])
                 area += value * (deltaX)
+                
+                // Append value to array
+                valuesForChart.append(value)
+                
+                // Update position
                 position += deltaX
+                
+                
                 
             } catch {
                 print(error)
             }
         }
-
         return area
     }
+    
     
     //---------------------------------------------------------------------------------------------------
     //MARK: - UISlider
