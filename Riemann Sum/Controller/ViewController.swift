@@ -15,6 +15,8 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     // Outlets
     @IBOutlet weak var formulasTableView: UITableView!
     @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var barLineChartView: BarLineChartViewBase!
+    @IBOutlet weak var lineChartView: LineChartView!
     
 
     // Instance variables
@@ -23,7 +25,7 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
     var deltaX = Double()
     
     // Empty array for chart
-    var valuesForChart : [Double] = []
+    var chartData : [ChartDataEntry] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,9 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         formulasTableView.register(UINib(nibName: "IntegralCell", bundle: nil), forCellReuseIdentifier: "customIntegralCell")
         
         // Slider initial config
-        sliderConfig(value: 50, max: 100)
+        sliderConfig(value: 10, max: 100)
+        
+        chartConfig()
     }
     
     override func didReceiveMemoryWarning() {
@@ -108,8 +112,11 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
             return
         }
         
-        // Test
-        print(calcRSandGraphValues(numberOfRectangles: sliderValue, parsedString: stringForMathParser))
+        // Calculate the area
+        let area = calcRSandGraphValues(numberOfRectangles: sliderValue, parsedString: stringForMathParser)
+        
+        // Input data to graph
+        setChartValues(entries: chartData, area: area, formula: currentList.list[indexPath.row].functionGiven)
     }
     
     // Sets the height of out tableview rows
@@ -150,7 +157,7 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         var position : Double = deltaX / 2.0
         
         // Reset to initial condition
-        valuesForChart = []
+        chartData = []
         
         for _ in 0...numberOfRectangles - 1 {
             do {
@@ -158,18 +165,17 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
                 let value = try parsedString.evaluate(["x": position])
                 area += value * (deltaX)
                 
-                // Append value to array
-                valuesForChart.append(value)
+                // Append (x,y) to our array of CharData
+                chartData.append(ChartDataEntry(x: position, y: value))
                 
                 // Update position
                 position += deltaX
-                
-                
                 
             } catch {
                 print(error)
             }
         }
+        
         return area
     }
     
@@ -193,6 +199,50 @@ class ViewController: UIViewController, userEnteredNewFunction, UITableViewDeleg
         sliderValue = Int(sender.value)
         
     }
+    
+    //---------------------------------------------------------------------------------------------------
+    //MARK: - CHART
+    
+    func setChartValues(entries: [ChartDataEntry], area: Double, formula: String){
+        let set = LineChartDataSet(values: entries, label: "f(x) = \(formula)")
+        // Update description line
+        lineChartView.chartDescription?.text = "Approximate area: \(area)    Rectangles: \(sliderValue)"
+        
+        // Disable circle inner hole
+        set.drawCircleHoleEnabled = false
+        
+        // Smaller radius
+        set.circleRadius = CGFloat(4.0)
+        
+        // Color
+        set.setCircleColor(NSUIColor.black)
+        
+        // Line mode
+        set.mode = .cubicBezier
+        
+        // Fill area under the curbe
+        set.fill = Fill.fillWithColor(NSUIColor.red)
+        set.drawFilledEnabled = true
+        
+        // Removes the yellow highlight that indicates user pressed an area
+        set.drawVerticalHighlightIndicatorEnabled = false
+        set.drawHorizontalHighlightIndicatorEnabled = false
+        
+        // Remove unneccesary axis lines
+        lineChartView.rightAxis.enabled = false
+        lineChartView.xAxis.enabled = false
+        
+        // Add data set
+        let data = LineChartData(dataSet: set)
+        lineChartView.data = data
+        
+        
+    }
+    
+    func chartConfig(){
+        
+    }
+    
     
     //---------------------------------------------------------------------------------------------------
 }
